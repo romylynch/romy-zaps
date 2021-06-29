@@ -1,10 +1,7 @@
-Handler = Proc.new do |req, res|
-	res.status = 200
-	res['Content-Type'] = 'text/text; charset=utf-8'
-	if req.query.has_key?("name")
-		name = req.query["name"]
-		res.body = "Hello, #{name}!"
-	else
-		res.body = "Hello, stranger!"
-	end
+require 'json'
+file = File.read(../lib/zapier/zapfile.json)
+data_hash = JSON.parse(file)
+response = data_hash["zaps"].map do |zap|
+  names = zap["nodes"].to_a.map { |node| node[1]["selected_api"] }
+  {title: zap["title"], names: names}
 end
