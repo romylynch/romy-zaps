@@ -11,5 +11,5 @@ Handler = Proc.new do |req, res|
 
   res.status = 200
   res["Content-Type"] = "application/json"
-  res.body = body
+  res.body = body.to_json
 end
